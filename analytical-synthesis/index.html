@@ -1,1 +1,314 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Interactive analytical synthesis of four-bar mechanisms for two and three precision positions, verified in MATLAB.">
+<title>Four-Bar Motion Synthesis Lab</title><style>:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#263746;background:#eef1f4;font-size:13px;--blue:#0072bd;--border:#d8dfe5;--muted:#657788;--orange:#d86820;--green:#228468}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button,select{cursor:pointer}button{border:1px solid #cbd4dd;border-radius:4px;background:#fff;color:#34485a;padding:8px 11px;white-space:nowrap}button:hover{background:#edf5fb;border-color:#80b5d7}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #e6a03c;outline-offset:2px}button:disabled{opacity:.4;cursor:default}input[type=number],select{width:100%;height:34px;background:white;border:1px solid #c6d0d9;border-radius:3px;padding:6px 8px;color:#20374b;min-width:0}input:invalid{border-color:#cf8075}input[type=checkbox]{accent-color:var(--blue)}.app-header{display:flex;align-items:center;gap:15px;background:#14344e;color:#fff;padding:18px 24px;border-bottom:3px solid #de792e}.brand-mark{font-family:Georgia,serif;font-size:48px;line-height:46px;color:#f5a550;width:43px;transform:rotate(-15deg)}.eyebrow{font-size:10px;letter-spacing:1.6px;font-weight:650;color:#768d9f;margin-bottom:5px}.app-header .eyebrow{color:#b4cadb;font-size:9px}h1{font-weight:550;letter-spacing:-.4px;font-size:23px;margin:0}.reference-badge{margin-left:auto;font-size:11px;color:#d4e4ed;border:1px solid #416079;border-radius:4px;padding:8px 11px;display:flex;gap:8px;align-items:center}.reference-badge span{background:#72cbb1;width:6px;height:6px;border-radius:50%}.toolbar{display:flex;gap:8px;align-items:center;background:#fff;padding:0 20px;border-bottom:1px solid var(--border);min-height:49px}.toolbar button{font-size:12px;border-color:transparent;background:transparent}.toolbar button:hover{background:#edf4f9}.workspace-tab{align-self:stretch;display:flex;align-items:center;border-bottom:3px solid var(--blue);color:#006bb2;font-weight:650;padding:0 8px;margin-right:12px}.spacer{flex:1}.workspace{display:grid;grid-template-columns:310px minmax(390px,1fr) 265px;gap:14px;padding:16px;max-width:1900px;margin:auto;align-items:start}.panel{background:#fff;border:1px solid var(--border);border-radius:5px;overflow:hidden}.panel-title{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:1px;font-weight:750;padding:15px 16px;background:#f7f9fb;border-bottom:1px solid var(--border);color:#4c6275}.section-num{font-size:10px;color:#93a4b1;font-weight:500}.inputs form{padding:16px}.field{display:flex;flex-direction:column;gap:6px;min-width:0;margin-bottom:12px}.field label{font-size:11px;color:#526879;font-weight:600}.form-row{display:flex;gap:9px}.form-row>.field{flex:1}.form-row>.unit{flex:.8}.hint{font-size:10px;color:#71808d;line-height:1.65;margin:0 0 15px}.pose-input{border-top:1px solid #e3e8ed;padding-top:14px;margin-top:4px}.input-section-title{font-weight:650;font-size:12px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.pose-marker{border-radius:3px;width:22px;height:22px;background:#e5f1f9;color:#0072bd;display:inline-flex;justify-content:center;align-items:center;font-size:11px}.pose-input:nth-child(2) .pose-marker{background:#fcf1e7;color:#ae5d19}.pose-input .field{margin-bottom:11px}#attachments{border-top:1px solid #e3e8ed;margin-top:4px;padding-top:14px}.design-note{background:#f3f7fa;border-left:3px solid #85a8c1;padding:10px 11px;font-size:10px;line-height:1.55;margin:7px 0 15px;color:#607584}.design-note strong{color:#3b576c}.design-note p{margin:4px 0 0}.primary{background:#0072bd;border-color:#0072bd;color:white;font-weight:600}.primary:hover{background:#005d99;color:#fff;border-color:#005d99}.synthesize{width:100%;display:flex;justify-content:space-between;padding:11px 12px}#status{font-size:11px;line-height:1.6;margin-top:11px;color:#22775c}#status.error{color:#b74132;background:#fdf1ee;border-left:3px solid #c45e4b;padding:10px}.visual-area{background:#fff;border:1px solid var(--border);border-radius:5px;overflow:hidden;min-width:0}.plot-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:19px 20px 15px}.plot-head h2{font-size:19px;font-weight:550;letter-spacing:-.3px;margin:0}.plot-actions{display:flex;gap:7px}.plot-actions button{font-size:10px;padding:6px 8px}.plot-options{display:flex;gap:15px;align-items:center;padding:0 20px 11px;border-bottom:1px solid #e4e9ee;font-size:10px;color:#637b8c}.plot-options label{display:flex;align-items:center;gap:4px}.equal-scale{margin-left:auto;white-space:nowrap;color:#8a9aa6}.plot-wrap{position:relative;background:#fcfdfe;height:clamp(370px,43vw,610px)}#plot{width:100%;height:100%;display:block}#emptyPlot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#f8fafce8;text-align:center;padding:40px;color:#7b8c98}#emptyPlot[hidden]{display:none}.legend{display:flex;gap:18px;flex-wrap:wrap;padding:12px 20px;border-top:1px solid #e4e9ee;color:#667c8c;font-size:10px}.legend span{display:flex;align-items:center;gap:6px}.swatch{width:16px;height:3px;display:inline-block}.swatch.input{background:#0072bd}.swatch.coupler{background:#cf792c}.swatch.output{background:#735aa3}.swatch.precision{background:#849bab;height:0;border-top:2px dashed #849bab}.playback{background:#f7f9fb;border-top:1px solid var(--border);padding:15px 20px}.playback-top{display:flex;align-items:center;gap:8px}.playback-top button{font-size:11px}.playback-top label{margin-left:7px;font-size:10px;color:#748897}.playback-top select{width:61px;height:31px;font-size:11px}#poseReadout{font-size:10px;color:#6d8291}#progress{width:100%;accent-color:var(--blue);margin:16px 0 5px;cursor:pointer}.pose-buttons{display:flex;justify-content:space-between}.pose-buttons button{font-size:9px;border:none;color:#607b90;padding:3px 0;background:none}.angle-readout{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #dfe5eb;margin-top:12px;padding-top:12px;font-size:10px;color:#6d8292}.angle-readout b{font-variant-numeric:tabular-nums;color:#344e63;margin-left:4px;font-weight:550}.result-section{padding:15px 16px;border-bottom:1px solid #e4e9ed}.result-section:last-child{border:0}.result-section h3{font-size:12px;margin:0 0 13px;font-weight:650}.pass{display:flex;align-items:center;gap:8px;color:#22785d;font-size:11px;font-weight:650}.pass span{border-radius:50%;background:#e5f3ed;width:23px;height:23px;display:flex;align-items:center;justify-content:center}.result-note{font-size:10px;line-height:1.65;color:#738897;margin:9px 0 0}.result-table{width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}.result-table th{color:#8293a0;font-size:9px;font-weight:500;text-align:right;padding:0 0 9px}.result-table th:first-child{text-align:left}.result-table td{text-align:right;padding:7px 0;border-top:1px solid #edf0f3}.result-table td:first-child{text-align:left;color:#50697b}.length-bar{display:block;height:3px;border-radius:2px;background:#c4dced;margin-top:4px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:11px}.metric small{font-size:9px;color:#7a8d9b;display:block;margin-bottom:5px}.metric b{font-size:13px;font-weight:550;color:#2c6857}.quality{font-size:10px;color:#567180;line-height:1.7;margin:0}.data-link{font-size:10px;color:#0072bd;text-decoration:none;display:inline-block;margin-top:9px}footer{display:flex;justify-content:space-between;gap:15px;border-top:1px solid #d6dfe6;background:#f7f9fb;padding:10px 20px;color:#8393a0;font-size:9px}.footer-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#45a48a;margin:0 5px 1px 0}dialog{width:min(850px,94vw);max-height:90vh;border:1px solid #c1cfda;border-radius:7px;padding:0;box-shadow:0 20px 70px #17304740;color:#334d60}dialog::backdrop{background:#102b4680}.dialog-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:#f3f7fa;border-bottom:1px solid var(--border)}.dialog-head h2{font-size:19px;margin:0;font-weight:550}.dialog-head button{border:none;background:none}#dialogBody{padding:22px 25px;font-size:13px;line-height:1.8}#dialogBody h3{font-size:14px;color:#164c70;margin-top:24px}#dialogBody pre{white-space:pre-wrap;background:#f2f6f9;padding:14px;font-size:12px;line-height:1.8;border-left:3px solid #76a6c5}#dialogBody table{width:100%;border-collapse:collapse;font-size:11px}#dialogBody td,#dialogBody th{text-align:left;border-bottom:1px solid #dfe6eb;padding:7px}#dialogBody a{color:#0072bd}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0)}[hidden]{display:none!important}@media(min-width:1550px){.workspace{grid-template-columns:330px minmax(400px,1fr) 290px;gap:18px;padding:22px}.inputs form{padding:18px}.plot-wrap{height:610px}}@media(max-width:1150px){.workspace{grid-template-columns:285px minmax(380px,1fr)}.results{grid-column:1/-1}.results #resultContent{display:grid;grid-template-columns:repeat(3,1fr)}.results .panel-title{padding:11px 16px}.result-section{border-right:1px solid var(--border)}.result-section:last-child{grid-column:1/-1}.toolbar{flex-wrap:wrap}.plot-options{gap:8px}.equal-scale{display:none}}@media(max-width:720px){.app-header{padding:16px;gap:10px}h1{font-size:20px}.reference-badge{display:none}.toolbar{padding:7px 10px;gap:2px}.workspace-tab{padding:9px;font-size:11px}.toolbar .spacer{display:none}.toolbar button{font-size:10px;padding:6px}.workspace{display:flex;flex-direction:column;padding:10px;gap:12px}.workspace> *{width:100%}.inputs .form-row{gap:12px}.pose-input{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.pose-input .input-section-title{grid-column:1/-1}.pose-input>.field{grid-column:1/-1}.plot-head{padding:16px}.plot-wrap{height:380px}.legend{gap:12px}.angle-readout{flex-wrap:wrap}.playback{padding:14px}.results #resultContent{grid-template-columns:1fr 1fr}.result-section:last-child{grid-column:1/-1}.playback-top #poseReadout{display:none}footer{flex-wrap:wrap;padding:10px}.toolbar .workspace-tab{margin-right:0}.plot-options{font-size:9px;padding:0 12px 10px}#dialogBody{padding:16px}}
+</style>
+</head>
+<body>
+<header class="app-header"><div class="brand-mark" aria-hidden="true">∿</div><div><div class="eyebrow">MECHANISM DESIGN / MOTION GENERATION</div><h1>Four-Bar Synthesis Lab</h1></div><span class="reference-badge"><span></span> MATLAB R2026b reference</span></header>
+<nav class="toolbar" aria-label="Workspace actions"><div class="workspace-tab">Synthesis workspace</div><button id="method">Equations & assumptions</button><button id="validation">MATLAB comparison</button><div class="spacer"></div><button id="loadDemo">Load reference example</button><button id="export">Export design ↓</button></nav>
+<main class="workspace">
+<aside class="inputs panel"><div class="panel-title"><span>DESIGN SPECIFICATION</span><span class="section-num">01</span></div>
+<form id="specForm" novalidate>
+<div class="field"><label for="count">Precision positions</label><select id="count"><option value="2">2 positions · single displacement</option><option value="3" selected>3 positions · two displacements</option></select></div>
+<div class="form-row"><div class="field"><label for="p1x">P₁ · x</label><input id="p1x" type="number" step="any" value="0" required></div><div class="field"><label for="p1y">P₁ · y</label><input id="p1y" type="number" step="any" value="0" required></div><div class="field unit"><label for="units">Unit label</label><select id="units"><option>mm</option><option>cm</option><option>m</option><option selected>in</option><option>unit</option></select></div></div>
+<p class="hint">All angles are in degrees, counterclockwise positive. Displacements and rotations are relative to position 1.</p>
+<div id="poseInputs"></div>
+<section id="attachments"><div class="input-section-title">Two-position design choices</div><p class="hint">Vectors from moving pivots to P₁: Z = P₁ − A₁ and S = P₁ − B₁.</p><div class="form-row"><div class="field"><label for="zx">Z · x</label><input id="zx" type="number" step="any" required></div><div class="field"><label for="zy">Z · y</label><input id="zy" type="number" step="any" required></div></div><div class="form-row"><div class="field"><label for="sx">S · x</label><input id="sx" type="number" step="any" required></div><div class="field"><label for="sy">S · y</label><input id="sy" type="number" step="any" required></div></div></section>
+<div class="design-note"><strong>Design freedom</strong><p>Coupler rotations α are explicit inputs. For two positions, choose Z and S as well. For three positions, both attachment vectors are solved analytically.</p></div>
+<button class="primary synthesize" type="submit">Synthesize mechanism <span>→</span></button>
+<div id="status" role="status" aria-live="polite"></div>
+</form></aside>
+<section class="visual-area"><div class="plot-head"><div><div class="eyebrow">PLANAR KINEMATICS</div><h2>Mechanism workspace</h2></div><div class="plot-actions"><button id="fit" title="Fit all geometry in view">Fit view</button><button id="svgExport" title="Download vector plot">Save SVG ↓</button></div></div>
+<div class="plot-options"><label><input id="ghosts" type="checkbox" checked> Precision poses</label><label><input id="trace" type="checkbox" checked> Coupler-point path</label><span class="equal-scale">Equal axes · <span id="plotUnit">in</span></span></div>
+<div class="plot-wrap"><svg id="plot" role="img" aria-label="Four-bar mechanism and prescribed precision positions" viewBox="0 0 900 620"></svg><div id="emptyPlot" hidden>No validated mechanism. Adjust the design specification.</div></div>
+<div class="legend"><span><i class="swatch input"></i>Input O₂A</span><span><i class="swatch coupler"></i>Coupler ABP</span><span><i class="swatch output"></i>Output BO₄</span><span><i class="swatch precision"></i>Precision positions</span></div>
+<div class="playback"><div class="playback-top"><button class="primary" id="play">▶ Play motion</button><button id="restart" aria-label="Return to starting position">↤ Start</button><label for="speed">Speed</label><select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select><div class="spacer"></div><span id="poseReadout">Position 1 → 3</span></div><label class="sr-only" for="progress">Motion progress</label><input id="progress" type="range" min="0" max="1000" step="1" value="0"><div class="pose-buttons" id="poseButtons"></div><div class="angle-readout"><span>β <b id="liveBeta">0.000°</b></span><span>γ <b id="liveGamma">0.000°</b></span><span>α <b id="liveAlpha">0.000°</b></span><span>P <b id="liveP">(0, 0)</b></span></div></div>
+</section>
+<aside class="results panel"><div class="panel-title"><span>SYNTHESIS RESULTS</span><span class="section-num">02</span></div><div id="resultContent"></div></aside>
+</main>
+<footer><span><span class="footer-dot"></span> Analytical displacement dyads · rigid planar links</span><span id="footerValidation">MATLAB ↔ JavaScript comparison verified</span><span>ME 154 / Engineering workspace</span></footer>
+<dialog id="infoDialog"><div class="dialog-head"><h2 id="dialogTitle"></h2><button id="closeDialog" aria-label="Close dialog">✕</button></div><div id="dialogBody"></div></dialog>
+<script type="module">
+// Independently ported from the validated MATLAB engineering implementation.
+const C=(x=0,y=0)=>[x,y];
+const add=(a,b)=>C(a[0]+b[0],a[1]+b[1]);
+const sub=(a,b)=>C(a[0]-b[0],a[1]-b[1]);
+const mul=(a,b)=>C(a[0]*b[0]-a[1]*b[1],a[0]*b[1]+a[1]*b[0]);
+const mag=a=>Math.hypot(...a);
+const scale=(a,k)=>C(a[0]*k,a[1]*k);
+const div=(a,b)=>scale(mul(a,C(b[0],-b[1])),1/(b[0]*b[0]+b[1]*b[1]));
+const rad=d=>d*Math.PI/180;
+const deg=r=>r*180/Math.PI;
+const exp=r=>C(Math.cos(r),Math.sin(r));
+const arg=a=>Math.atan2(a[1],a[0]);
+const cross=(a,b)=>a[0]*b[1]-a[1]*b[0];
+const must=(ok,code,message)=>{if(!ok){const e=new Error(message);e.code=code;throw e;}};
+const array=x=>Array.isArray(x)?x:[x];
+function normalizeSpec(raw){
+  const s={...raw,p1:[...raw.p1],z:[...(raw.z??(raw.n===3?[0,0]:[NaN,NaN]))],s:[...(raw.s??(raw.n===3?[0,0]:[NaN,NaN]))]};
+  for(const key of ['distance','direction','beta','gamma','alpha'])s[key]=array(raw[key]);
+  return s;
+}
+function validateInput(s){
+  must([2,3].includes(s.n),'Input','Choose two or three precision positions.');
+  for(const key of (s.n===2?['p1','z','s']:['p1']))must(Array.isArray(s[key])&&s[key].length===2&&s[key].every(Number.isFinite),'Input',`${key} needs two finite coordinates.`);
+  for(const key of ['distance','direction','beta','gamma','alpha'])must(s[key].length===s.n-1&&s[key].every(Number.isFinite),'Input',`Check ${key}: every value must be finite.`);
+  must(s.distance.every(x=>x>=0),'Input','Displacement magnitudes must be nonnegative.');
+  must([...s.beta,...s.gamma,...s.alpha].every(x=>Math.abs(x)<=720),'Input','Rotations must lie within ±720 degrees.');
+}
+function dyad(b,a,d){
+  const det=sub(mul(b[0],a[1]),mul(b[1],a[0]));
+  const q=mag(det)/(Math.hypot(...b.map(mag))*Math.hypot(...a.map(mag)));
+  must(Number.isFinite(q)&&q>1e-8,'Singular','Dyad equations are singular or ill-conditioned. Change α or prescribed rotations.');
+  return [div(sub(mul(d[0],a[1]),mul(d[1],a[0])),det),div(sub(mul(b[0],d[1]),mul(b[1],d[0])),det),q];
+}
+function forward(g,beta){
+  const A=add(g.O2,mul(g.w,exp(rad(beta))));
+  const v=sub(g.O4,A),d=mag(v),c=mag(sub(g.B,g.A)),r=mag(g.u);
+  must(d>1e-12*g.scale,'Toggle','Circle centers coincide.');
+  const x=(c*c-r*r+d*d)/(2*d),h2=c*c-x*x;
+  must(h2>=-1e-10*g.scale*g.scale,'Unreachable','No real four-bar closure.');
+  const branch=Math.sign(cross(sub(g.O4,g.A),sub(g.B,g.A)));
+  const B=add(A,mul(C(x,branch*Math.sqrt(Math.max(0,h2))),scale(v,1/d)));
+  const rot=div(sub(B,A),sub(g.B,g.A));
+  const P=add(A,mul(g.z,rot));
+  return {A,B,P,alpha:deg(arg(rot)),gamma:deg(arg(div(sub(B,g.O4),g.u)))};
+}
+function sweepMargin(g,betas){
+  const c=mag(sub(g.B,g.A)),r=mag(g.u),phi=arg(sub(g.O4,g.O2));
+  return Math.min(...betas.slice(1).map((end,k)=>{
+    const low=rad(Math.min(betas[k],end))+arg(g.w),high=rad(Math.max(betas[k],end))+arg(g.w);
+    const candidates=[low,high];
+    for(let j=Math.ceil((low-phi)/Math.PI);j<=Math.floor((high-phi)/Math.PI);j++)candidates.push(phi+j*Math.PI);
+    const ds=candidates.map(t=>mag(sub(sub(g.O4,g.O2),scale(exp(t),mag(g.w)))));
+    return Math.min(Math.min(...ds)-Math.abs(c-r),c+r-Math.max(...ds))/g.scale;
+  }));
+}
+function synthesize(raw){
+  const s=normalizeSpec(raw);validateInput(s);
+  const d=s.distance.map((r,k)=>scale(exp(rad(s.direction[k])),r));
+  const q=angles=>angles.map(x=>sub(exp(rad(x)),C(1)));
+  const a=q(s.alpha),b=q(s.beta),g=q(s.gamma);
+  let w,z,u,t,quality=[1,1];
+  if(s.n===2){
+    must(mag(b[0])>1e-8&&mag(g[0])>1e-8,'Singular','Two-position dyads need nonzero β and γ modulo 360°.');
+    z=s.z;t=s.s;w=div(sub(d[0],mul(a[0],z)),b[0]);u=div(sub(d[0],mul(a[0],t)),g[0]);
+  }else{
+    const left=dyad(b,a,d),right=dyad(g,a,d);[w,z]=left;[u,t]=right;quality=[left[2],right[2]];
+  }
+  const A=sub(s.p1,z),B=sub(s.p1,t),O2=sub(A,w),O4=sub(B,u);
+  const lengths=[mag(sub(O4,O2)),mag(w),mag(sub(B,A)),mag(u),mag(z),mag(t)];
+  const L=Math.max(...s.distance,...lengths.slice(0,4));
+  must(lengths.slice(0,4).every(x=>Number.isFinite(x)&&x>1e-8*L),'Degenerate','Ground or moving link is degenerate.');
+  const geom={p1:s.p1,A,B,O2,O4,w,u,z,s:t,scale:L};
+  must(Math.abs(cross(sub(O4,A),sub(B,A)))>1e-8*L*L,'Toggle','Initial assembly is at a toggle.');
+  const betas=[0,...s.beta],margin=sweepMargin(geom,betas);
+  must(margin>1e-8,'Branch','No continuous nonsingular input sweep connects these poses. Change design choices.');
+  const trajectory=[];
+  for(let k=0;k<s.n-1;k++)for(let j=k===0?0:1;j<=120;j++){
+    const beta=betas[k]+(betas[k+1]-betas[k])*j/120;
+    const f=forward(geom,beta);
+    const row=[beta,...f.A,...f.B,...f.P,f.alpha,f.gamma];
+    if(trajectory.length){
+      const prev=trajectory.at(-1);
+      for(const col of [7,8]){
+        while(row[col]-prev[col]>180)row[col]-=360;
+        while(row[col]-prev[col]<-180)row[col]+=360;
+      }
+    }
+    trajectory.push(row);
+  }
+  const targets=[s.p1,...d.map(delta=>add(s.p1,delta))];
+  const poses=betas.map((_,k)=>trajectory[k*120]);
+  const errors=poses.map((p,k)=>{
+    const pos=p.slice(5,7),aa=p.slice(1,3),bb=p.slice(3,5);
+    return [mag(sub(pos,targets[k]))/L,Math.abs(p[0]-betas[k]),Math.abs(p[7]-[0,...s.alpha][k]),Math.abs(p[8]-[0,...s.gamma][k]),Math.max(Math.abs(mag(sub(aa,O2))-mag(w)),Math.abs(mag(sub(bb,aa))-lengths[2]),Math.abs(mag(sub(bb,O4))-mag(u)))/L];
+  });
+  must(errors.every(e=>e[0]<1e-8&&e[4]<1e-8&&Math.max(...e.slice(1,4))<1e-7),'Precision','Prescribed poses or unwrapped rotations fail on the initial assembly branch.');
+  return {spec:s,pivots:[O2,A,B,O4],lengths,vectors:[w,z,u,t],systemQuality:quality,geom,trajectory,poses,errors,targets,sweepMargin:margin,scale:L,passed:true};
+}
+
+
+const $=id=>document.getElementById(id);
+const state={result:null,playing:false,progress:0,phase:0,lastTime:null,dirty:false,defaults:null,comparison:null,bounds:null,frame:null,specCache:{}};
+const fmt=(x,d=5)=>Math.abs(x)<1e-12?'0':Number(x.toPrecision(d)).toString();
+const sci=x=>x===0?'0':x.toExponential(2);
+const unit=()=>$('units').value;
+const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+const input=(id,label,value)=>`<div class="field"><label for="${id}">${label}</label><input id="${id}" type="number" step="any" value="${value}" required></div>`;
+function renderInputs(spec){
+  const s=normalizeSpec(spec);$('count').value=s.n;
+  $('p1x').value=s.p1[0];$('p1y').value=s.p1[1];
+  ['zx','zy','sx','sy'].forEach((id,k)=>$(id).value=[...s.z,...s.s][k]);
+  $('poseInputs').innerHTML=Array.from({length:s.n-1},(_,k)=>`<section class="pose-input"><div class="input-section-title"><span class="pose-marker">${k+2}</span> Position ${k+2} relative to position 1</div><div class="form-row">${input('d'+k,'Displacement |δ'+(k+2)+'|',s.distance[k])}${input('dir'+k,'Direction δ'+(k+2)+' (°)',s.direction[k])}</div><div class="form-row">${input('beta'+k,'Input β'+(k+2)+' (°)',s.beta[k])}${input('gamma'+k,'Output γ'+(k+2)+' (°)',s.gamma[k])}</div>${input('alpha'+k,'Coupler α'+(k+2)+' (°) · design input',s.alpha[k])}</section>`).join('');
+  $('attachments').hidden=s.n===3;
+}
+function readSpec(n=Number($('count').value)){
+  const number=id=>$(id).value.trim()===''?NaN:Number($(id).value);
+  const arr=prefix=>Array.from({length:n-1},(_,k)=>number(prefix+k));
+  return {n,p1:[number('p1x'),number('p1y')],distance:arr('d'),direction:arr('dir'),beta:arr('beta'),gamma:arr('gamma'),alpha:arr('alpha'),z:[number('zx'),number('zy')],s:[number('sx'),number('sy')]};
+}
+function pause(){state.playing=false;$('play').textContent='▶ Play motion';state.lastTime=null;}
+function controls(enabled){for(const id of ['play','restart','progress','export','svgExport','fit'])$(id).disabled=!enabled;}
+function dirty(){pause();state.dirty=true;controls(false);$('status').className='';$('status').textContent='Inputs changed. Synthesize to update the mechanism.';$('emptyPlot').hidden=false;$('emptyPlot').textContent='Inputs changed · Synthesize to update';$('resultContent').innerHTML='<div class="result-section"><p class="result-note">Recalculate to display results for the current inputs.</p></div>';}
+function run(){
+  pause();
+  try{
+    const result=synthesize(readSpec());state.result=result;state.dirty=false;state.progress=0;state.phase=0;controls(true);
+    $('status').className='';$('status').textContent='✓ Precision poses and continuous sweep passed.';
+    $('emptyPlot').hidden=true;$('plotUnit').textContent=unit();
+    renderResults(result);fitPlot();renderFrame();
+    $('poseReadout').textContent=`Position 1 → ${result.spec.n}`;
+    $('poseButtons').innerHTML=Array.from({length:result.spec.n},(_,k)=>`<button type="button" data-pose="${k}">P${k+1}${k===0?' · start':k===result.spec.n-1?' · finish':''}</button>`).join('');
+    $('poseButtons').querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{pause();setProgress(Number(button.dataset.pose)/(result.spec.n-1));}));
+  }catch(e){
+    state.result=null;state.dirty=false;controls(false);$('status').className='error';$('status').textContent=e.message;
+    $('plot').replaceChildren();$('emptyPlot').hidden=false;$('emptyPlot').textContent='No validated mechanism · '+e.message;
+    $('resultContent').innerHTML='<div class="result-section"><h3>Design needs adjustment</h3><p class="result-note">The current inputs do not define a usable mechanism on a continuous assembly branch. No result or animation is shown.</p></div>';
+    $('poseButtons').replaceChildren();
+  }
+}
+function renderResults(r){
+  const l=r.lengths,p=r.pivots,e=r.errors;
+  const maxPos=Math.max(...e.map(x=>x[0])),maxRot=Math.max(...e.map(x=>Math.max(...x.slice(1,4))));
+  $('resultContent').innerHTML=`<section class="result-section"><div class="pass"><span>✓</span> Precision poses verified</div><p class="result-note">${r.spec.n} prescribed poses reached on one assembly branch. Continuous input sweep is feasible.</p></section>
+  <section class="result-section"><h3>Pivot coordinates <small>(${esc(unit())})</small></h3><table class="result-table"><thead><tr><th>Pivot</th><th>x</th><th>y</th></tr></thead><tbody>${['O₂ · fixed','A₁ · moving','B₁ · moving','O₄ · fixed'].map((name,k)=>`<tr><td>${name}</td><td>${fmt(p[k][0],6)}</td><td>${fmt(p[k][1],6)}</td></tr>`).join('')}</tbody></table></section>
+  <section class="result-section"><h3>Link dimensions <small>(${esc(unit())})</small></h3><table class="result-table"><tbody>${['Ground O₂O₄','Input O₂A','Coupler AB','Output BO₄','Attachment AP','Attachment BP'].map((name,k)=>`<tr><td>${name}<span class="length-bar" style="width:${100*l[k]/Math.max(...l)}%"></span></td><td>${fmt(l[k],7)}</td></tr>`).join('')}</tbody></table></section>
+  <section class="result-section"><h3>Numerical checks</h3><div class="metrics"><div class="metric"><small>Position error / L</small><b>${sci(maxPos)}</b></div><div class="metric"><small>Rotation error (°)</small><b>${sci(maxRot)}</b></div></div><p class="result-note">L = ${fmt(r.scale)} ${esc(unit())}. Limits: 10⁻⁸ normalized length; 10⁻⁷ degrees.</p><p class="quality">Sweep clearance / L: <strong>${fmt(r.sweepMargin,4)}</strong><br>${r.spec.n===3?'Dyad quality: '+r.systemQuality.map(x=>fmt(x,4)).join(' / '):'Attachment vectors Z and S prescribed'}</p></section>
+  <section class="result-section"><h3>Reference computation</h3><p class="result-note">New MATLAB R2026b implementation.<br>16 cases · 2,896 motion samples compared.<br>6 invalid specifications rejected in both engines.</p><a class="data-link" href="comparison-report.json" download>Download comparison report ↓</a><br><a class="data-link" href="fourbar-matlab.zip" download>Download MATLAB sources & validation ↓</a></section>`;
+}
+const svgEl=(tag,attrs={})=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);return el;};
+const niceStep=x=>{const p=10**Math.floor(Math.log10(x)),f=x/p;return (f<=1?1:f<=2?2:f<=5?5:10)*p;};
+function fitPlot(){
+  const r=state.result;if(!r)return;
+  const width=$('plot').clientWidth||900,height=$('plot').clientHeight||620;
+  const points=[...r.pivots,...r.targets,...r.trajectory.flatMap(t=>[t.slice(1,3),t.slice(3,5),t.slice(5,7)])];
+  const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
+  const xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+  const padding=65,k=Math.min((width-2*padding)/(xmax-xmin||1),(height-2*padding)/(ymax-ymin||1));
+  state.bounds={width,height,k,cx:(xmin+xmax)/2,cy:(ymin+ymax)/2};
+  $('plot').setAttribute('viewBox',`0 0 ${width} ${height}`);renderBackground();
+}
+function xy(p){const b=state.bounds;return [b.width/2+(p[0]-b.cx)*b.k,b.height/2-(p[1]-b.cy)*b.k];}
+function line(parent,a,b,attrs={}){const p=xy(a),q=xy(b);parent.append(svgEl('line',{x1:p[0],y1:p[1],x2:q[0],y2:q[1],...attrs}));}
+function poly(parent,points,attrs={}){parent.append(svgEl('polygon',{points:points.map(p=>xy(p).join(',')).join(' '),...attrs}));}
+function text(parent,p,value,attrs={}){const [x,y]=xy(p),el=svgEl('text',{x,y,'font-family':'Inter,Segoe UI,sans-serif','font-size':11,fill:'#5b7488',...attrs});el.textContent=value;parent.append(el);}
+function circle(parent,p,r,attrs={}){const [x,y]=xy(p);parent.append(svgEl('circle',{cx:x,cy:y,r,...attrs}));}
+function renderBackground(){
+  const r=state.result,b=state.bounds,svg=$('plot');svg.replaceChildren();
+  const back=svgEl('g');svg.append(back);
+  const xrange=b.width/b.k,yrange=b.height/b.k,xlo=b.cx-xrange/2,ylo=b.cy-yrange/2;
+  const step=niceStep(Math.max(xrange/8,yrange/7));
+  for(let x=Math.ceil(xlo/step)*step;x<xlo+xrange;x+=step){line(back,[x,ylo],[x,ylo+yrange],{stroke:Math.abs(x)<1e-9?'#c6d3dd':'#e9eef3','stroke-width':1});text(back,[x,ylo+16/b.k],fmt(x,4),{'text-anchor':'middle','font-size':9,fill:'#8da0ae'});}
+  for(let y=Math.ceil(ylo/step)*step;y<ylo+yrange;y+=step){line(back,[xlo,y],[xlo+xrange,y],{stroke:Math.abs(y)<1e-9?'#c6d3dd':'#e9eef3','stroke-width':1});text(back,[xlo+8/b.k,y],fmt(y,4),{dy:-4,'font-size':9,fill:'#8da0ae'});}
+  text(back,[xlo+xrange-12/b.k,ylo+16/b.k],'x',{'text-anchor':'end',fill:'#7890a2'});text(back,[xlo+9/b.k,ylo+yrange-15/b.k],'y',{fill:'#7890a2'});
+  if($('trace').checked){const pts=r.trajectory.map(t=>xy(t.slice(5,7)).join(',')).join(' ');back.append(svgEl('polyline',{points:pts,fill:'none',stroke:'#359789','stroke-width':2,'stroke-dasharray':'3 4',opacity:.9}));}
+  if($('ghosts').checked)r.poses.forEach((t,k)=>{poly(back,[t.slice(1,3),t.slice(3,5),t.slice(5,7)],{fill:'#b4c7d7','fill-opacity':.05,stroke:k===2?'#bf945f':'#8da6b9','stroke-width':1.25,'stroke-dasharray':'5 5'});});
+  line(back,r.pivots[0],r.pivots[3],{stroke:'#b5c3cd','stroke-width':5,'stroke-dasharray':'6 5'});
+  r.targets.forEach((p,k)=>{
+    circle(back,p,5,{fill:'#fff',stroke:'#3f9380','stroke-width':2});
+    const labelPoint=[p[0]+(k===1?22:0)/b.k,p[1]+(24+k*18)/b.k];
+    line(back,p,labelPoint,{stroke:'#92b7aa','stroke-width':.8});
+    text(back,labelPoint,`P${k+1}`,{'text-anchor':'middle','font-size':11,'font-weight':650,fill:'#2b7c68',dy:-3});
+  });
+  const layer=svgEl('g',{id:'movingMechanism'});svg.append(layer);state.frame=layer;
+}
+function renderFrame(){
+  const r=state.result;if(!r||state.dirty||!state.frame)return;
+  const segment=Math.min(r.spec.n-2,Math.floor(state.progress*(r.spec.n-1)));
+  const fpart=state.progress*(r.spec.n-1)-segment;
+  const betas=[0,...r.spec.beta],beta=betas[segment]+(betas[segment+1]-betas[segment])*fpart;
+  const f=forward(r.geom,beta),layer=state.frame;layer.replaceChildren();
+  poly(layer,[f.A,f.B,f.P],{fill:'#df9b4a','fill-opacity':.14,stroke:'#d49751','stroke-width':1.5});
+  line(layer,r.geom.O2,f.A,{stroke:'#0072bd','stroke-width':6,'stroke-linecap':'round'});
+  line(layer,f.A,f.B,{stroke:'#d27825','stroke-width':6,'stroke-linecap':'round'});
+  line(layer,f.B,r.geom.O4,{stroke:'#775ca7','stroke-width':6,'stroke-linecap':'round'});
+  for(const [p,name] of [[r.geom.O2,'O₂'],[r.geom.O4,'O₄']]){
+    const [x,y]=xy(p);layer.append(svgEl('path',{d:`M${x-11},${y+17} L${x},${y} L${x+11},${y+17} Z`,fill:'#dce4eb',stroke:'#72899b','stroke-width':1.5}));
+    layer.append(svgEl('line',{x1:x-15,y1:y+20,x2:x+15,y2:y+20,stroke:'#8b9caa','stroke-width':2}));
+    circle(layer,p,5,{fill:'white',stroke:'#48657b','stroke-width':2});text(layer,p,name,{dx:-16,dy:-12,'font-weight':650,fill:'#34536b'});
+  }
+  for(const [p,name] of [[f.A,'A'],[f.B,'B']]){circle(layer,p,5,{fill:'#fff',stroke:'#506a7d','stroke-width':2});text(layer,p,name,{dx:9,dy:18,'font-weight':650});}
+  circle(layer,f.P,5.5,{fill:'#258772',stroke:'#fff','stroke-width':2});text(layer,f.P,'P',{dx:10,dy:17,'font-weight':650,fill:'#227c68'});
+  $('progress').value=Math.round(state.progress*1000);$('liveBeta').textContent=fmt(beta,6)+'°';
+  // Principal display angles are lifted to the validated winding near this frame.
+  const index=Math.min(r.trajectory.length-1,Math.round(state.progress*(r.trajectory.length-1)));
+  const lift=(angle,col)=>angle+360*Math.round((r.trajectory[index][col]-angle)/360);
+  $('liveGamma').textContent=fmt(lift(f.gamma,8),6)+'°';$('liveAlpha').textContent=fmt(lift(f.alpha,7),6)+'°';$('liveP').textContent=`(${fmt(f.P[0],5)}, ${fmt(f.P[1],5)})`;
+}
+function setProgress(value){state.progress=Math.min(1,Math.max(0,value));state.phase=Math.acos(1-2*state.progress);renderFrame();}
+function animate(time){
+  if(state.playing&&state.result&&!state.dirty){
+    if(state.lastTime!==null){state.phase+=(time-state.lastTime)/6000*Math.PI*Number($('speed').value);state.progress=(1-Math.cos(state.phase))/2;renderFrame();}
+    state.lastTime=time;
+  }
+  requestAnimationFrame(animate);
+}
+function download(name,content,type){const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function showDialog(title,html){pause();$('dialogTitle').textContent=title;$('dialogBody').innerHTML=html;$('infoDialog').showModal();}
+function method(){showDialog('Analytical method & assumptions',`
+<p>Two independent displacement dyads share the same coupler motion. The formulation follows the lecture’s vector notation; all implementation code was written from these engineering equations.</p>
+<h3>Conventions and design inputs</h3><p>Represent planar vectors as complex numbers x + iy. All prescribed rotations are relative to position 1 and positive counterclockwise. For j = 2, 3, δⱼ = dⱼ exp(i directionⱼ). Pⱼ = P₁ + δⱼ. α is the coupler rotation, β the input rotation, and γ the output rotation.</p>
+<pre>W = A₁ − O₂      Z = P₁ − A₁
+U = B₁ − O₄      S = P₁ − B₁
+W(exp(iβⱼ) − 1) + Z(exp(iαⱼ) − 1) = δⱼ
+U(exp(iγⱼ) − 1) + S(exp(iαⱼ) − 1) = δⱼ</pre>
+<h3>Two positions</h3><p>Choose α₂ and the two Cartesian attachment vectors Z and S. With β₂ and γ₂ prescribed, solve:</p><pre>W = [δ₂ − Z(exp(iα₂) − 1)] / [exp(iβ₂) − 1]
+U = [δ₂ − S(exp(iα₂) − 1)] / [exp(iγ₂) − 1]</pre>
+<p>This parameterization covers the two-position dyad family when the prescribed input and output rotations are nonzero modulo 360°. Cases with zero dyad rotation need a separate degenerate-family treatment and are rejected.</p>
+<h3>Three positions</h3><p>Prescribe α₂ and α₃ as additional design parameters. Define aⱼ = exp(iαⱼ) − 1 and bⱼ = exp(iβⱼ) − 1. Solve each 2×2 complex system:</p><pre>[b₂  a₂] [W] = [δ₂]     Replace b with g = exp(iγ) − 1
+[b₃  a₃] [Z]   [δ₃]     for the output dyad [U, S].</pre>
+<p>Normalized determinant quality |det(M)| / (‖column 1‖ ‖column 2‖) must exceed 10⁻⁸. This is a determinant indicator, not a condition number.</p>
+<h3>Geometry and validation</h3><pre>A₁ = P₁ − Z        O₂ = A₁ − W
+B₁ = P₁ − S        O₄ = B₁ − U
+Ground = |O₄ − O₂|; input = |W|;
+coupler = |B₁ − A₁|; output = |U|.</pre>
+<p>Independent forward kinematics intersects a circle of radius AB about A(β) with a circle of radius |U| about O₄. The initial signed assembly branch is retained. P is reconstructed by rigidly rotating Z with AB. The recovered point, unwrapped rotations, and link lengths are checked.</p>
+<p>Across each input-angle interval, analytic extrema of |O₄ − A(β)| must remain strictly between |AB − BO₄| and AB + BO₄. Exact toggles, branch changes, singular systems, and wrong rotation windings are rejected. This certifies geometric closure along the continuous input sweep; 121 frames per interval also check precision poses and reference parity.</p>
+<h3>Scope</h3><p>Ideal rigid planar links and revolute joints. P may lie off the line AB on the rigid coupler plate. Lengths use one consistent unit; the unit selector changes labels only. Playback is an eased back-and-forth input sweep, visiting positions 1 → 2 → 3 in order. It is not a dynamic simulation. Collision, joint limits, force, stress, and manufacturability are outside this kinematic model.</p>
+<p>Lecture reference: <em>Week 8 Analytical Synthesis—Two Positions</em>, slides 2–7 (ME 154, Yunjian Qiu). The lecture’s two-position angular free choices are replaced here by Cartesian Z and S, with the same displacement loop equations.</p><p><a href="METHOD.md" download>Download full engineering method</a> · <a href="fourbar-matlab.zip" download>MATLAB sources & validation</a> · <a href="FourBarSynthesis.html" download>Offline application</a></p>`);}
+function validation(){const r=state.comparison;if(!r)return;showDialog('MATLAB ↔ JavaScript validation',`
+<p><strong>${r.passed?'All reference checks passed.':'Reference checks failed.'}</strong> MATLAB ${esc(r.matlabVersion)} is the authoritative reference. These are stored reference comparisons; a new browser design is checked by the validated JavaScript engine.</p>
+<div class="metrics"><div class="metric"><small>Maximum normalized path difference</small><b>${sci(r.maxNormalizedPathError)}</b></div><div class="metric"><small>Maximum rotation difference (°)</small><b>${sci(r.maxAngleErrorDegrees)}</b></div></div>
+<p>Acceptance tolerance: 10⁻⁸ normalized coordinates and lengths; 10⁻⁷ degrees for rotations. ${r.trajectorySamples.toLocaleString()} trajectory samples across translation, scaling, rotation, forward motion, and reverse motion.</p>
+<table><thead><tr><th>MATLAB reference case</th><th>Samples</th><th>Path Δ / L</th><th>Rotation Δ (°)</th></tr></thead><tbody>${r.cases.map(c=>`<tr><td>${esc(c.name)} ✓</td><td>${c.samples}</td><td>${sci(c.normalizedPathError)}</td><td>${sci(c.angleErrorDegrees)}</td></tr>`).join('')}</tbody></table>
+<h3>Invalid cases rejected by both implementations</h3><ul>${r.rejections.map(c=>`<li>${esc(c.name)} — ${esc(c.actual)} ✓</li>`).join('')}</ul><p><a href="comparison-report.json" download>Download comparison report</a> · <a href="fourbar-matlab.zip" download>Download reproducible MATLAB sources and reference data</a></p>`);}
+async function init(){
+  controls(false);
+  try{
+    const fetchJSON=async url=>({"defaults.json":{"two":{"n":2,"p1":[0,0],"distance":0.20854947372522448,"direction":126.00978124622945,"beta":20,"gamma":2.4802346548187493,"alpha":-5.864002427778488,"z":[0.4607023832497913,1.427498971652156],"s":[-1.9894201959324613,-0.303656523091544]},"three":{"n":3,"p1":[0,0],"distance":[0.20854947372522448,0.41443530880511437],"direction":[126.00978124622945,145.4666316971706],"beta":[20,40],"gamma":[2.4802346548187493,7.9120307816507776],"alpha":[-5.864002427778488,-10.437475971466746],"z":[0.4607023832497913,1.427498971652156],"s":[-1.9894201959324613,-0.303656523091544]}},"comparison-report.json":{"matlabVersion":"26.2.0.3386108 (R2026b)","linearTolerance":1e-08,"angularToleranceDegrees":1e-07,"cases":[{"name":"2-position-case-1","samples":121,"normalizedGeometryError":1.1102230246251553e-16,"normalizedPathError":4.440892098500621e-16,"angleErrorDegrees":3.108624468950438e-14,"passed":true},{"name":"3-position-case-1","samples":241,"normalizedGeometryError":5.551115123125804e-17,"normalizedPathError":3.3306690738754824e-16,"angleErrorDegrees":2.942091015256665e-14,"passed":true},{"name":"2-position-case-2","samples":121,"normalizedGeometryError":2.2204460492503106e-16,"normalizedPathError":5.551115123125777e-16,"angleErrorDegrees":5.706546346573305e-14,"passed":true},{"name":"3-position-case-2","samples":241,"normalizedGeometryError":1.1102230246251575e-16,"normalizedPathError":5.551115123125788e-16,"angleErrorDegrees":5.1958437552457326e-14,"passed":true},{"name":"2-position-case-3","samples":121,"normalizedGeometryError":2.273736754432315e-16,"normalizedPathError":5.11590769747271e-16,"angleErrorDegrees":3.5083047578154947e-14,"passed":true},{"name":"3-position-case-3","samples":241,"normalizedGeometryError":5.684341886080841e-17,"normalizedPathError":3.410605131648505e-16,"angleErrorDegrees":3.3181790648484366e-14,"passed":true},{"name":"2-position-case-4","samples":121,"normalizedGeometryError":2.1684043449710145e-16,"normalizedPathError":4.336808689942029e-16,"angleErrorDegrees":3.093011957666647e-14,"passed":true},{"name":"3-position-case-4","samples":241,"normalizedGeometryError":2.1684043449709901e-16,"normalizedPathError":3.7947076036992325e-16,"angleErrorDegrees":4.601874437071274e-14,"passed":true},{"name":"2-position-case-5","samples":121,"normalizedGeometryError":2.2204460492503062e-16,"normalizedPathError":3.3306690738754593e-16,"angleErrorDegrees":2.6645352591003757e-14,"passed":true},{"name":"3-position-case-5","samples":241,"normalizedGeometryError":2.2204460492503244e-16,"normalizedPathError":6.106226635438393e-16,"angleErrorDegrees":5.595524044110789e-14,"passed":true},{"name":"2-position-case-6","samples":121,"normalizedGeometryError":3.469446951953618e-18,"normalizedPathError":4.440892098500631e-16,"angleErrorDegrees":4.263256414560601e-14,"passed":true},{"name":"3-position-case-6","samples":241,"normalizedGeometryError":2.2204460492503032e-16,"normalizedPathError":8.881784197001213e-16,"angleErrorDegrees":7.904787935331115e-14,"passed":true},{"name":"2-position-case-7","samples":121,"normalizedGeometryError":8.881784197001238e-17,"normalizedPathError":3.552713678800495e-16,"angleErrorDegrees":4.141131881851834e-14,"passed":true},{"name":"3-position-case-7","samples":241,"normalizedGeometryError":1.7763568394002612e-16,"normalizedPathError":3.5527136788005223e-16,"angleErrorDegrees":4.3076653355456074e-14,"passed":true},{"name":"2-position-case-8","samples":121,"normalizedGeometryError":2.220446049250331e-16,"normalizedPathError":3.330669073875496e-16,"angleErrorDegrees":3.0753177782116836e-14,"passed":true},{"name":"3-position-case-8","samples":241,"normalizedGeometryError":1.1102230246251528e-16,"normalizedPathError":4.996003610813188e-16,"angleErrorDegrees":3.774758283725532e-14,"passed":true}],"rejections":[{"name":"singular three-position dyad","expected":"Singular","actual":"Singular","passed":true},{"name":"zero input rotation","expected":"Singular","actual":"Singular","passed":true},{"name":"negative displacement magnitude","expected":"Input","actual":"Input","passed":true},{"name":"nonfinite coordinate","expected":"Input","actual":"Input","passed":true},{"name":"wrong prescribed winding","expected":"Precision","actual":"Precision","passed":true},{"name":"incompatible assembly or sweep","expected":"Precision","actual":"Precision","passed":true}],"passed":true,"maxNormalizedGeometryError":2.273736754432315e-16,"maxNormalizedPathError":8.881784197001213e-16,"maxAngleErrorDegrees":7.904787935331115e-14,"trajectorySamples":2896}})[url];
+    [state.defaults,state.comparison]=await Promise.all([fetchJSON('defaults.json'),fetchJSON('comparison-report.json')]);
+    if(!state.comparison.passed)throw Error('Reference comparison did not pass.');
+    renderInputs(state.defaults.three);run();
+    $('specForm').addEventListener('submit',event=>{event.preventDefault();run();});
+    $('specForm').addEventListener('input',event=>{if(event.target.id!=='count')dirty();});
+    $('count').addEventListener('change',()=>{
+      const n=Number($('count').value),previousN=$('poseInputs').querySelectorAll('.pose-input').length+1;
+      const previous=readSpec(previousN);state.specCache[previousN]=previous;
+      const next={...previous,n};
+      const extra=normalizeSpec(state.specCache[3]||state.defaults.three);
+      for(const key of ['distance','direction','beta','gamma','alpha'])next[key]=Array.from({length:n-1},(_,k)=>previous[key][k]??extra[key][k]);
+      if(previousN===3&&state.result&&!state.dirty){next.z=state.result.vectors[1];next.s=state.result.vectors[3];}
+      renderInputs(next);run();
+    });
+    $('loadDemo').addEventListener('click',()=>{renderInputs(Number($('count').value)===2?state.defaults.two:state.defaults.three);run();});
+    $('play').addEventListener('click',()=>{if(state.playing)pause();else{state.playing=true;state.lastTime=null;$('play').textContent='Ⅱ Pause motion';}});
+    $('restart').addEventListener('click',()=>{pause();setProgress(0);});
+    $('progress').addEventListener('input',()=>{pause();setProgress(Number($('progress').value)/1000);});
+    $('fit').addEventListener('click',()=>{fitPlot();renderFrame();});
+    for(const id of ['ghosts','trace'])$(id).addEventListener('change',()=>{if(state.result&&!state.dirty){renderBackground();renderFrame();}});
+    $('export').addEventListener('click',()=>{const r=state.result;if(!r)return;download('fourbar-design.json',JSON.stringify({format:'fourbar-synthesis-v1',unitLabel:unit(),...r,referenceComparison:'MATLAB reference suite passed; current case validated in JavaScript.'},null,2),'application/json');});
+    $('svgExport').addEventListener('click',()=>{const s=$('plot').cloneNode(true);s.setAttribute('xmlns','http://www.w3.org/2000/svg');download('fourbar-mechanism.svg',new XMLSerializer().serializeToString(s),'image/svg+xml');});
+    $('method').addEventListener('click',method);$('validation').addEventListener('click',validation);$('closeDialog').addEventListener('click',()=>$('infoDialog').close());
+    new ResizeObserver(()=>{if(state.result&&!state.dirty){fitPlot();renderFrame();}}).observe($('plot'));
+    requestAnimationFrame(animate);
+  }catch(error){$('status').className='error';$('status').textContent='Application startup failed: '+error.message;}
+}
+init();
+
+</script>
+</body></html>
