@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Four-bar mechanism analysis and synthesis tools for ME 154.">
+  <title>Four-Bar Mechanism Lab</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --navy: #0c2236;
+      --navy-light: #143b59;
+      --ink: #eef6fb;
+      --muted: #a9bfd0;
+      --line: rgba(185, 215, 232, .2);
+      --orange: #f3a65a;
+      --blue: #6fc3ed;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--navy);
+    }
+    a { color: inherit; }
+    .page {
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at 78% 22%, rgba(53, 119, 158, .24), transparent 30rem),
+        linear-gradient(135deg, #0b2033 0%, #0f2f49 55%, #0b2236 100%);
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .28;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(173, 216, 237, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(173, 216, 237, .08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+    }
+    .content { width: min(1120px, calc(100% - 48px)); margin: auto; position: relative; }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; align-items: center; gap: 13px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .mark { color: var(--orange); font: 42px/1 Georgia, serif; transform: rotate(-15deg); }
+    .course { font-size: 12px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+    main { padding: 95px 0 88px; }
+    .eyebrow { margin: 0 0 18px; color: var(--orange); font-size: 12px; font-weight: 750; letter-spacing: .2em; text-transform: uppercase; }
+    h1 { max-width: 760px; margin: 0; font-size: clamp(44px, 8vw, 86px); line-height: .98; letter-spacing: -.065em; font-weight: 600; }
+    .intro { max-width: 570px; margin: 27px 0 0; color: var(--muted); font-size: 18px; line-height: 1.65; }
+    .tools { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 64px; }
+    .tool {
+      display: flex;
+      min-height: 250px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: rgba(17, 52, 78, .68);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .tool:hover, .tool:focus-visible { transform: translateY(-5px); border-color: rgba(111, 195, 237, .8); background: rgba(24, 70, 100, .9); }
+    .tool:focus-visible { outline: 3px solid var(--orange); outline-offset: 4px; }
+    .number { color: var(--orange); font-size: 12px; font-weight: 700; letter-spacing: .16em; }
+    .tool h2 { margin: 47px 0 10px; font-size: 27px; letter-spacing: -.03em; font-weight: 550; }
+    .tool p { margin: 0; color: var(--muted); line-height: 1.55; }
+    .launch { display: flex; align-items: center; gap: 8px; margin-top: 28px; color: var(--blue); font-size: 13px; font-weight: 700; }
+    .arrow { font-size: 20px; transition: transform .2s ease; }
+    .tool:hover .arrow, .tool:focus-visible .arrow { transform: translateX(5px); }
+    footer { display: flex; justify-content: space-between; gap: 20px; padding: 22px 0 30px; border-top: 1px solid var(--line); color: #7795a9; font-size: 12px; }
+
+    @media (max-width: 700px) {
+      .content { width: min(100% - 32px, 560px); }
+      header { padding: 22px 0; }
+      .course { display: none; }
+      main { padding: 72px 0 64px; }
+      .intro { font-size: 16px; }
+      .tools { grid-template-columns: 1fr; margin-top: 44px; }
+      .tool { min-height: 215px; }
+      footer { flex-direction: column; gap: 7px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="content">
+      <header>
+        <div class="brand"><span class="mark" aria-hidden="true">∿</span><span>Four-Bar Mechanism Lab</span></div>
+        <div class="course">ME 154 / Engineering workspace</div>
+      </header>
+
+      <main>
+        <p class="eyebrow">Planar kinematics · mechanism design</p>
+        <h1>Explore the motion of a four-bar mechanism.</h1>
+        <p class="intro">Choose a workspace to analyze an existing mechanism or synthesize one from prescribed precision positions.</p>
+
+        <section class="tools" aria-label="Mechanism workspaces">
+          <a class="tool" href="Analytical%20analysis/index.html">
+            <div>
+              <div class="number">01 / ANALYSIS</div>
+              <h2>Analytical analysis</h2>
+              <p>Enter link dimensions, inspect the geometry, and study position, velocity, and motion behavior.</p>
+            </div>
+            <div class="launch">Open analysis workspace <span class="arrow" aria-hidden="true">→</span></div>
+          </a>
+          <a class="tool" href="Analytical%20synthesis/index.html">
+            <div>
+              <div class="number">02 / SYNTHESIS</div>
+              <h2>Analytical synthesis</h2>
+              <p>Design a four-bar mechanism from two or three precision positions and verify the resulting motion.</p>
+            </div>
+            <div class="launch">Open synthesis workspace <span class="arrow" aria-hidden="true">→</span></div>
+          </a>
+        </section>
+      </main>
+
+      <footer>
+        <span>Analytical displacement methods · rigid planar links</span>
+        <span>Start here</span>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
